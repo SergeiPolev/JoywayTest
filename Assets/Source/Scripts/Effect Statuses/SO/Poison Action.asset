@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Poison Action
   m_EditorClassIdentifier: 
   forEnemies: 1
+  tickOnEnd: 1
   showIcon: {fileID: 21300000, guid: 41c6f94d80f9e034a9c63dcf97d30f5c, type: 3}
+  vfx: {fileID: 6167513035918127459, guid: 21d7e119fce2d3a4a913fb46209cafa1, type: 3}
   showIconColor: {r: 0, g: 1, b: 0.0014023781, a: 1}
   damage: 1
   periodicDamge: 1

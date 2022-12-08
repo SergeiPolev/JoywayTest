@@ -2,22 +2,14 @@ using UnityEngine;
 
 public class BattleSystem : MonoBehaviour, IStateListener
 {
-    [SerializeField] private TeamBase playerTeam;
-    [SerializeField] private TeamBase enemyTeam;
+    [SerializeField] private PlayerTeam playerTeam;
+    [SerializeField] private EnemyTeam enemyTeam;
 
     [SerializeField] private ActionBase[] enemyActions;
     [SerializeField] private ActionBase[] playerActions;
 
-    [Header("Debug")]
-    [SerializeField] private ActionHolder actionHolder;
-    [SerializeField] private ActionHolder actionHolderTwo;
-
     private void Start()
     {
-        /// Debug
-        actionHolder.Init(playerActions[0]);
-        actionHolderTwo.Init(playerActions[1]);
-
         InitTeams();
 
         enemyTeam.OnEndTurn += () => BattleStateSystem._instance.ChangeState(BattleState.PLAYER_TURN);
@@ -30,7 +22,7 @@ public class BattleSystem : MonoBehaviour, IStateListener
     {
         playerTeam.Init(playerActions);
 
-        enemyTeam.Init(enemyActions);
+        enemyTeam.Init(enemyActions, playerTeam.GetCharacters());
     }
     
     private void FinishGame(TeamSide loseSide)
@@ -38,10 +30,10 @@ public class BattleSystem : MonoBehaviour, IStateListener
         switch (loseSide)
         {
             case TeamSide.Player:
-                BattleStateSystem._instance.ChangeState(BattleState.WIN);
+                BattleStateSystem._instance.ChangeState(BattleState.LOSE);
                 break;
             case TeamSide.Enemy:
-                BattleStateSystem._instance.ChangeState(BattleState.LOSE);
+                BattleStateSystem._instance.ChangeState(BattleState.WIN);
                 break;
             default:
                 break;
@@ -57,6 +49,7 @@ public class BattleSystem : MonoBehaviour, IStateListener
                 break;
             case BattleState.ENEMY_TURN:
                 enemyTeam.StartTurn();
+                playerTeam.OnEndTurn?.Invoke();
                 break;
             case BattleState.WIN:
                 break;

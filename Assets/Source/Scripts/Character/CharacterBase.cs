@@ -11,8 +11,13 @@ public abstract class CharacterBase : MonoBehaviour, IActionTarget
     internal TeamSide teamSide;
 
     public TeamSide GetTeamSide() => teamSide;
+    public float GetAdditionalHealth() => additionalHealth;
+    public float GetHealth() => health;
+    public float GetMaxHealth() => maxHealth;
+
     public TeamSide SetTeamSide(TeamSide teamSide) => this.teamSide = teamSide;
 
+    public event Action OnHealthChange;
     public event Action<CharacterBase> OnDie;
 
     private void Awake()
@@ -38,13 +43,20 @@ public abstract class CharacterBase : MonoBehaviour, IActionTarget
         if (damageCounter <= additionalHealth)
         {
             additionalHealth -= damageCounter;
+
+            CheckAdditionalHealth();
+
             return;
         }
 
-        additionalHealth = 0;
         damageCounter -= additionalHealth;
 
-        health -= damageCounter;
+        additionalHealth = 0;
+        CheckAdditionalHealth();
+
+        health = Mathf.Clamp(health - damageCounter, 0, maxHealth);
+
+        HealthChanged();
 
         if (health <= 0)
         {
@@ -52,6 +64,14 @@ public abstract class CharacterBase : MonoBehaviour, IActionTarget
         }
 
         Debug.Log(health);
+    }
+
+    private void CheckAdditionalHealth()
+    {
+        if (additionalHealth <= 0)
+        {
+            ClearEffect(new ArmorEffect(null, 0, 0, null, false));
+        }
     }
 
     private void Die()
@@ -62,23 +82,26 @@ public abstract class CharacterBase : MonoBehaviour, IActionTarget
     public void ApplyHeal(float heal)
     {
         health = Mathf.Clamp(health + heal, 0, maxHealth);
+
+        HealthChanged();
     }
 
     public void ApplyAdditionalHeal(float heal)
     {
         additionalHealth = heal;
+
+        HealthChanged();
     }
 
     public void ClearAdditionalHeal()
     {
         additionalHealth = 0;
+
+        HealthChanged();
     }
-    public float GetHealth()
+
+    private void HealthChanged()
     {
-        return health;
-    }
-    public float GetMaxHealth()
-    {
-        return maxHealth;
+        OnHealthChange?.Invoke();
     }
 }

@@ -20,13 +20,24 @@ public class CharacterCanvas : MonoBehaviour
         characterBase = GetComponent<CharacterBase>();
 
         statusHandler.OnEffectUpdate += UpdateUI;
+        characterBase.OnHealthChange += UpdateUI;
 
         canvasRoot.forward = Camera.main.transform.forward;
     }
-
+    private void Start()
+    {
+        UpdateUI();
+    }
     private void UpdateUI()
     {
-        healthText.text = $"{characterBase.GetHealth()} / {characterBase.GetMaxHealth()}";
+        if (characterBase.GetAdditionalHealth() > 0)
+        {
+            healthText.text = $"{characterBase.GetHealth()}<color=green>+{characterBase.GetAdditionalHealth()}</color> / {characterBase.GetMaxHealth()}";
+        }
+        else
+        {
+            healthText.text = $"{characterBase.GetHealth()} / {characterBase.GetMaxHealth()}";
+        }
 
         foreach(Transform item in effectsRoot)
         {

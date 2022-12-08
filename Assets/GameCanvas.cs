@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameCanvas : MonoBehaviour, IStateListener
 {
     [SerializeField] private Button skipStepButton;
+    [SerializeField] private CanvasGroup skipStepGroup;
     [SerializeField] private FinishPanel finishPanel;
 
     private void Awake()
@@ -16,12 +17,12 @@ public class GameCanvas : MonoBehaviour, IStateListener
         switch (battleState)
         {
             case BattleState.PLAYER_TURN:
-                skipStepButton.interactable = true;
-                skipStepButton.image.DOFade(1, 0.4f);
+                skipStepGroup.interactable = true;
+                skipStepGroup.DOFade(1, 0.4f);
                 break;
             case BattleState.ENEMY_TURN:
-                skipStepButton.interactable = false;
-                skipStepButton.image.DOFade(0, 0.4f);
+                skipStepGroup.interactable = false;
+                skipStepGroup.DOFade(0, 0.4f);
                 break;
             case BattleState.WIN:
                 finishPanel.Win();

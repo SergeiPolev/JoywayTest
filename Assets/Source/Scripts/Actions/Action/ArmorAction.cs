@@ -8,8 +8,8 @@ public class ArmorAction : ActionBase
 
     public override void DoAction(IActionTarget actionTarget)
     {
-        actionTarget.ApplyAdditionalHeal(health);
+        base.DoAction(actionTarget);
 
-        actionTarget.ApplyEffect(new ArmorEffect(actionTarget, duration, ShowIcon));
+        actionTarget.ApplyEffect(new ArmorEffect(actionTarget, health, duration, ShowIcon, tickOnEnd));
     }
 }

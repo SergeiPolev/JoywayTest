@@ -11,6 +11,8 @@ public abstract class TeamBase : MonoBehaviour
     public Action OnEndTurn;
     public Action<TeamSide> OnLose;
 
+    public Dictionary<CharacterBase, StatusHandler> GetCharacters() => characters;
+
     public virtual void Init(ActionBase[] availableActions)
     {
         this.availableActions = availableActions;
@@ -25,17 +27,31 @@ public abstract class TeamBase : MonoBehaviour
 
             character.OnDie += OnCharacterDie;
         }
+
+        OnEndTurn += OnEndTurnMethod;
     }
     public virtual void StartTurn()
     {
-        foreach (var handler in characters.Values)
+        List<StatusHandler> tempList = new List<StatusHandler>(characters.Values);
+
+        foreach (var handler in tempList)
         {
-            handler.TickAllEffects();
+            handler.TickAllEffectsOnStart();
+        }
+    }
+    internal virtual void OnEndTurnMethod()
+    {
+        List<StatusHandler> tempList = new List<StatusHandler>(characters.Values);
+
+        foreach (var handler in tempList)
+        {
+            handler.TickAllEffectsOnEnd();
         }
     }
     private void OnCharacterDie(CharacterBase character)
     {
         characters.Remove(character);
+        Destroy(character.gameObject);
 
         if (characters.Count == 0)
         {

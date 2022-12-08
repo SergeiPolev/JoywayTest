@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface IActionTarget
 {
     public void ApplyEffect(EffectBase effect);
@@ -6,4 +8,6 @@ public interface IActionTarget
     public void ApplyHeal(float heal);
     public void ApplyAdditionalHeal(float heal);
     public void ClearAdditionalHeal();
+
+    GameObject gameObject { get; }
 }

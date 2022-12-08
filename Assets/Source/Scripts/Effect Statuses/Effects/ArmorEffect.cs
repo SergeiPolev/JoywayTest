@@ -1,9 +1,10 @@
 using UnityEngine;
 public class ArmorEffect : EffectBase
 {
-    public ArmorEffect(IActionTarget target, int duration, Sprite sprite) : base(target, duration, sprite)
+    private float health;
+    public ArmorEffect(IActionTarget target, float health, int duration, Sprite sprite, bool tickOnEnd) : base(target, duration, sprite, tickOnEnd)
     {
-
+        this.health = health;
     }
 
     public override void OnEffectCancel()
@@ -13,7 +14,7 @@ public class ArmorEffect : EffectBase
 
     public override void OnEffectStart()
     {
-
+        target.ApplyAdditionalHeal(health);
     }
 
     public override void TickEffect()

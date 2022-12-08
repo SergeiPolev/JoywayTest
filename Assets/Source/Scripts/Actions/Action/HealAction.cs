@@ -7,7 +7,9 @@ public class HealAction : ActionBase
 
     public override void DoAction(IActionTarget actionTarget)
     {
+        base.DoAction(actionTarget);
+
         actionTarget.ApplyHeal(heal);
-        actionTarget.ClearEffect(new PoisonEffect(null, 0, 0, ShowIcon));
+        actionTarget.ClearEffect(new PoisonEffect(null, 0, 0, ShowIcon, false));
     }
 }

@@ -7,6 +7,8 @@ public class AttackAction : ActionBase
 
     public override void DoAction(IActionTarget actionTarget)
     {
+        base.DoAction(actionTarget);
+
         actionTarget.ApplyDamage(damage);
     }
 }

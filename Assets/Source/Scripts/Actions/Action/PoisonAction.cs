@@ -9,8 +9,9 @@ public class PoisonAction : ActionBase
 
     public override void DoAction(IActionTarget actionTarget)
     {
-        var poisonEffect = new PoisonEffect(actionTarget, periodicDamge, duration, ShowIcon);
-        actionTarget.ApplyDamage(damage);
+        base.DoAction(actionTarget);
+
+        var poisonEffect = new PoisonEffect(actionTarget, periodicDamge, duration, ShowIcon, tickOnEnd);
         actionTarget.ApplyEffect(poisonEffect);
     }
 }

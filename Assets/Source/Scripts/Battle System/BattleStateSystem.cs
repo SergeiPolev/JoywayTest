@@ -43,6 +43,8 @@ public class BattleStateSystem : MonoBehaviour
         if (currentState == BattleState.PLAYER_TURN && Input.GetKeyDown(KeyCode.Space))
         {
             ChangeState(BattleState.ENEMY_TURN);
+
+            AudioManager._instance.PlayOneShot(AudioManager._instance.SoundsLibrary.ClickSound, 1f);
         }
 
         if (Input.GetKeyDown(KeyCode.R))

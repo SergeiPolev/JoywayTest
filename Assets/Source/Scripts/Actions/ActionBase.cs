@@ -18,10 +18,6 @@ public abstract class ActionBase : ScriptableObject
 
     internal virtual void MakeVFX(IActionTarget actionTarget)
     {
-        if (vfx != null)
-        {
-            var VFX = Instantiate(vfx, actionTarget.gameObject.transform);
-            Destroy(VFX, 2f);
-        }
+        VisualEffectsExtension.SpawnSingleVFX(vfx, actionTarget.gameObject.transform.position + Vector3.up, 2f);
     }
 }

@@ -10,6 +10,7 @@ public class ArmorAction : ActionBase
     {
         base.DoAction(actionTarget);
 
-        actionTarget.ApplyEffect(new ArmorEffect(actionTarget, health, duration, ShowIcon, tickOnEnd));
+        AudioManager._instance.PlayOneShot(AudioManager._instance.SoundsLibrary.ArmorSound, 1f);
+        actionTarget.ApplyEffect(new ArmorEffect(actionTarget, health, duration, ShowIcon, tickOnEnd, showIconColor));
     }
 }

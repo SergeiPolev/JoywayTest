@@ -9,6 +9,7 @@ public class AttackAction : ActionBase
     {
         base.DoAction(actionTarget);
 
+        AudioManager._instance.PlayOneShot(AudioManager._instance.SoundsLibrary.AttackSound, 1f);
         actionTarget.ApplyDamage(damage);
     }
 }

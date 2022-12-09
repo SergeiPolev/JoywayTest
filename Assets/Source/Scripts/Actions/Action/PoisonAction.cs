@@ -11,7 +11,8 @@ public class PoisonAction : ActionBase
     {
         base.DoAction(actionTarget);
 
-        var poisonEffect = new PoisonEffect(actionTarget, periodicDamge, duration, ShowIcon, tickOnEnd);
+        var poisonEffect = new PoisonEffect(actionTarget, periodicDamge, duration, ShowIcon, tickOnEnd, showIconColor);
+        AudioManager._instance.PlayOneShot(AudioManager._instance.SoundsLibrary.PoisonSound, 1f);
         actionTarget.ApplyEffect(poisonEffect);
     }
 }

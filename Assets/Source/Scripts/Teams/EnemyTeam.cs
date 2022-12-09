@@ -31,16 +31,27 @@ public class EnemyTeam : TeamBase
     {
         foreach (var character in characters)
         {
+            yield return new WaitForSeconds(2f);
+
             if (possibleTargets.Count == 0)
             {
                 continue;
             }
 
-            availableActions.GetRandom().DoAction(possibleTargets.GetRandom().Key);
+            var action = availableActions.GetRandom();
 
-            yield return new WaitForSeconds(1f);
+            if (action.forEnemies)
+            {
+                action.DoAction(possibleTargets.GetRandom().Key);
+            }
+            else
+            {
+                action.DoAction(characters.GetRandom().Key);
+            }
         }
 
+        yield return new WaitForSeconds(1f);
+        
         OnEndTurn?.Invoke();
     }
 }

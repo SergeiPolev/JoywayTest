@@ -2,7 +2,7 @@ using UnityEngine;
 public class ArmorEffect : EffectBase
 {
     private float health;
-    public ArmorEffect(IActionTarget target, float health, int duration, Sprite sprite, bool tickOnEnd) : base(target, duration, sprite, tickOnEnd)
+    public ArmorEffect(IActionTarget target, float health, int duration, Sprite sprite, bool tickOnEnd, Color color) : base(target, duration, sprite, tickOnEnd, color)
     {
         this.health = health;
     }

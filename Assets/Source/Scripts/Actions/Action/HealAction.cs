@@ -10,6 +10,7 @@ public class HealAction : ActionBase
         base.DoAction(actionTarget);
 
         actionTarget.ApplyHeal(heal);
-        actionTarget.ClearEffect(new PoisonEffect(null, 0, 0, ShowIcon, false));
+        AudioManager._instance.PlayOneShot(AudioManager._instance.SoundsLibrary.HealSound, 1f);
+        actionTarget.ClearEffect(new PoisonEffect(null, 0, 0, ShowIcon, false, showIconColor));
     }
 }

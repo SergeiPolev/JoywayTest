@@ -50,6 +50,7 @@ public class CharacterCanvas : MonoBehaviour
         {
             var imagePlace = Instantiate(effectIconPrefab, effectsRoot);
             imagePlace.sprite = item.Key.GetIcon();
+            imagePlace.color = item.Key.GetColor();
         }
     }
 }

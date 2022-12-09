@@ -4,6 +4,8 @@ using UnityEngine;
 public abstract class CharacterBase : MonoBehaviour, IActionTarget
 {
     [SerializeField] private float maxHealth;
+    [SerializeField] private GameObject dieVFX;
+    [SerializeField] private GameObject highlight;
 
     internal float health;
     internal float additionalHealth;
@@ -14,6 +16,7 @@ public abstract class CharacterBase : MonoBehaviour, IActionTarget
     public float GetAdditionalHealth() => additionalHealth;
     public float GetHealth() => health;
     public float GetMaxHealth() => maxHealth;
+    public void TurnHighlight(bool enabled) => highlight?.SetActive(enabled);
 
     public TeamSide SetTeamSide(TeamSide teamSide) => this.teamSide = teamSide;
 
@@ -40,11 +43,13 @@ public abstract class CharacterBase : MonoBehaviour, IActionTarget
     {
         var damageCounter = damage;
 
+        PopupDamageTextHandler._instance.SpawnPopup(transform.position, damage);
+
         if (damageCounter <= additionalHealth)
         {
             additionalHealth -= damageCounter;
 
-            CheckAdditionalHealth();
+            RemoveAdditionalHealth();
 
             return;
         }
@@ -52,7 +57,7 @@ public abstract class CharacterBase : MonoBehaviour, IActionTarget
         damageCounter -= additionalHealth;
 
         additionalHealth = 0;
-        CheckAdditionalHealth();
+        RemoveAdditionalHealth();
 
         health = Mathf.Clamp(health - damageCounter, 0, maxHealth);
 
@@ -66,16 +71,18 @@ public abstract class CharacterBase : MonoBehaviour, IActionTarget
         Debug.Log(health);
     }
 
-    private void CheckAdditionalHealth()
+    private void RemoveAdditionalHealth()
     {
         if (additionalHealth <= 0)
         {
-            ClearEffect(new ArmorEffect(null, 0, 0, null, false));
+            ClearEffect(new ArmorEffect(null, 0, 0, null, false, Color.white));
         }
     }
 
     private void Die()
     {
+        VisualEffectsExtension.SpawnSingleVFX(dieVFX, transform.position, 2f);
+
         OnDie?.Invoke(this);
     }
 
@@ -83,12 +90,16 @@ public abstract class CharacterBase : MonoBehaviour, IActionTarget
     {
         health = Mathf.Clamp(health + heal, 0, maxHealth);
 
+        PopupDamageTextHandler._instance.SpawnPopup(transform.position, -heal);
+
         HealthChanged();
     }
 
     public void ApplyAdditionalHeal(float heal)
     {
         additionalHealth = heal;
+
+        PopupDamageTextHandler._instance.SpawnPopup(transform.position, -heal);
 
         HealthChanged();
     }

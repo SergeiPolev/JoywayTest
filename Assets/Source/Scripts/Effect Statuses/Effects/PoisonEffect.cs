@@ -4,7 +4,7 @@ public class PoisonEffect : EffectBase
 {
     private float damage = 1;
 
-    public PoisonEffect(IActionTarget target, float initDamage, int initDuration, Sprite sprite, bool tickOnEnd) : base(target, initDuration, sprite, tickOnEnd)
+    public PoisonEffect(IActionTarget target, float initDamage, int initDuration, Sprite sprite, bool tickOnEnd, Color color) : base(target, initDuration, sprite, tickOnEnd, color)
     {
         damage = initDamage;
     }

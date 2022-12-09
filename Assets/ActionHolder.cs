@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ActionHolder : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler
+public class ActionHolder : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
     
@@ -11,15 +11,9 @@ public class ActionHolder : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     private bool isHandling;
 
-    private const int GroundLayer = 1 << 8;
-    private const int EnemyLayer = 1 << 9;
-
     public event Action OnActionDo;
 
-    private void Awake()
-    {
-        
-    }
+
     public void Init(ActionBase action)
     {
         this.action = action;
@@ -29,48 +23,19 @@ public class ActionHolder : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         spriteRenderer.sprite = action.ShowIcon;
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public bool CanDoAction(CharacterBase target)
     {
-        isHandling = false;
-
-        var mousePos = Input.mousePosition;
-
-        var ray = Camera.main.ScreenPointToRay(mousePos);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, EnemyLayer))
-        {
-            var target = hit.transform.GetComponent<CharacterBase>();
-
-            if (action.ForEnemies ^ target.GetTeamSide() == TeamSide.Player)
-            {
-                action.DoAction(target);
-                OnActionDo?.Invoke();
-
-                Destroy(gameObject);
-
-                return;
-            }
-        }
-
+        return action.ForEnemies ^ target.GetTeamSide() == TeamSide.Player;
+    }
+    public void ActivateHolder(CharacterBase target)
+    {
+        action.DoAction(target);
+        OnActionDo?.Invoke();
+    }
+    public void ReturnHolder()
+    {
         transform.position = initPosition;
-    }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        isHandling = true;
-    }
-
-    public void OnPointerMove(PointerEventData eventData)
-    {
-        if (isHandling)
-        {
-            var mousePos = Input.mousePosition;
-
-            var ray = Camera.main.ScreenPointToRay(mousePos);
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, GroundLayer))
-            {
-                transform.position = hit.point;
-            }
-        }
+        AudioManager._instance.PlayOneShot(AudioManager._instance.SoundsLibrary.PutDownSound, 1f);
     }
 }

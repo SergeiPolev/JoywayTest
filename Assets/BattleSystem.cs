@@ -45,15 +45,19 @@ public class BattleSystem : MonoBehaviour, IStateListener
         switch (battleState)
         {
             case BattleState.PLAYER_TURN:
+                AudioManager._instance.PlayOneShot(AudioManager._instance.SoundsLibrary.NextTurnSound, 1f);
                 playerTeam.StartTurn();
                 break;
             case BattleState.ENEMY_TURN:
-                enemyTeam.StartTurn();
+                AudioManager._instance.PlayOneShot(AudioManager._instance.SoundsLibrary.NextTurnSound, 1f);
                 playerTeam.OnEndTurn?.Invoke();
+                enemyTeam.StartTurn();
                 break;
             case BattleState.WIN:
+                AudioManager._instance.PlayOneShot(AudioManager._instance.SoundsLibrary.NextTurnSound, 1f);
                 break;
             case BattleState.LOSE:
+                AudioManager._instance.PlayOneShot(AudioManager._instance.SoundsLibrary.NextTurnSound, 1f);
                 break;
             default:
                 break;

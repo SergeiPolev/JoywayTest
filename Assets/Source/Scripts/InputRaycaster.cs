@@ -68,6 +68,7 @@ public class InputRaycaster : MonoBehaviour
                 if (highlightedCharacter != null)
                 {
                     highlightedCharacter.TurnHighlight(false);
+                    highlightedCharacter = null;
                 }
             }
         }

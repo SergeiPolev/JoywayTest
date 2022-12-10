@@ -729,6 +729,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2835258816902074903, guid: be1de2bb6abf26f438196a8789afbdff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835258817344269910, guid: be1de2bb6abf26f438196a8789afbdff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835258817770724704, guid: be1de2bb6abf26f438196a8789afbdff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4935031194896637296, guid: be1de2bb6abf26f438196a8789afbdff, type: 3}
+      propertyPath: enemyActions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4935031194896637296, guid: be1de2bb6abf26f438196a8789afbdff, type: 3}
+      propertyPath: enemyActions.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: f997d55ea6b1310449d9ddeb0a231582, type: 2}
+    - target: {fileID: 4935031194896637296, guid: be1de2bb6abf26f438196a8789afbdff, type: 3}
+      propertyPath: enemyActions.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a4f68d509502e04d9c4d66b91a7e4a6, type: 2}
     - target: {fileID: 4935031194896637297, guid: be1de2bb6abf26f438196a8789afbdff, type: 3}
       propertyPath: m_Name
       value: Battle System

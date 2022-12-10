@@ -20,7 +20,9 @@ public class AudioManager : MonoBehaviour
 
     public void PlayOneShot(AudioClip clip, float volume = 1f)
     {
-        audioSource.PlayOneShot(clip, volume);
+        /// Deleted Volume feature to fix sounds volume on .5f;
+
+        audioSource.PlayOneShot(clip, .5f);
     }
 
     public void Mute()

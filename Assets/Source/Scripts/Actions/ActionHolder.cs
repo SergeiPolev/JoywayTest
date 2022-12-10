@@ -9,8 +9,6 @@ public class ActionHolder : MonoBehaviour
     private ActionBase action;
     private Vector3 initPosition;
 
-    private bool isHandling;
-
     public event Action OnActionDo;
 
 

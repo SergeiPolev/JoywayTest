@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyTeam : TeamBase
 {
+    [SerializeField] private float enemyAttackTime = 2f;
     private Dictionary<CharacterBase, StatusHandler> possibleTargets;
 
     private Coroutine teamTurns;
@@ -31,7 +32,7 @@ public class EnemyTeam : TeamBase
     {
         foreach (var character in characters)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(enemyAttackTime);
 
             if (possibleTargets.Count == 0)
             {

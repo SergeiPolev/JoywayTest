@@ -28,6 +28,11 @@ public abstract class CharacterBase : MonoBehaviour, IActionTarget
         health = maxHealth;
         additionalHealth = 0;
         statusHandler = GetComponent<StatusHandler>();
+
+        if (statusHandler == null)
+        {
+            Debug.LogError($"NO STATUS HANDLER ON {gameObject.name}");
+        }
     }
 
     public void ClearEffect(EffectBase effect)
